@@ -18,13 +18,36 @@ export default class Renderer
         
         this.usePostprocess = false
 
+        if(this.debug)
+        {
+            this.debugFolder = this.debug.addFolder({
+                title: 'renderer'
+            })
+        }
+
         this.setInstance()
         this.setPostProcess()
     }
 
     setInstance()
     {
-        this.clearColor = '#010101'
+        this.clearColor = '#160f11'
+        
+        if(this.debug)
+        {
+            this.debugFolder
+                .addInput(
+                    this,
+                    'clearColor',
+                    {
+                        view: 'color'
+                    }
+                )
+                .on('change', () =>
+                {
+                    this.instance.setClearColor(this.clearColor, 1)
+                })
+        }
 
         // Renderer
         this.instance = new THREE.WebGLRenderer({

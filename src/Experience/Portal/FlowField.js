@@ -6,7 +6,7 @@ import fragmentShader from '../shaders/flowField/fragment.glsl'
 
 export default class FlowField
 {
-    constructor(_count)
+    constructor(_positions)
     {
         this.experience = new Experience()
         this.debug = this.experience.debug
@@ -14,8 +14,9 @@ export default class FlowField
         this.time = this.experience.time
         this.scene = this.experience.scene
 
-        this.count = _count
-        this.width = 256
+        this.positions = _positions
+        this.count = this.positions.length / 3
+        this.width = 4096
         this.height = Math.ceil(this.count / this.width)
         this.texture = null
 
@@ -43,9 +44,9 @@ export default class FlowField
 
         for(let i = 0; i < size; i++)
         {
-            data[i * 4 + 0] = (Math.random() - 0.5) * 1
-            data[i * 4 + 1] = (Math.random() - 0.5) * 1
-            data[i * 4 + 2] = (Math.random() - 0.5) * 1
+            data[i * 4 + 0] = this.positions[i * 3 + 0]
+            data[i * 4 + 1] = this.positions[i * 3 + 1]
+            data[i * 4 + 2] = this.positions[i * 3 + 2]
             data[i * 4 + 3] = Math.random()
         }
 
@@ -109,11 +110,11 @@ export default class FlowField
                 uBaseTexture: { value: this.baseTexture },
                 uTexture: { value: this.baseTexture },
 
-                uDecaySpeed: { value: 0.00141 },
+                uDecaySpeed: { value: 0.00054 },
 
-                uPerlinFrequency: { value: 0.630 },
-                uPerlinMultiplier: { value: 0.014 },
-                uTimeFrequency: { value: 0.0004 }
+                uPerlinFrequency: { value: 2.500 },
+                uPerlinMultiplier: { value: 0.004 },
+                uTimeFrequency: { value: 0.0002 }
             },
             vertexShader: vertexShader,
             fragmentShader: fragmentShader
@@ -137,7 +138,7 @@ export default class FlowField
                 .addInput(
                     this.plane.material.uniforms.uPerlinFrequency,
                     'value',
-                    { label: 'uPerlinFrequency', min: 0, max: 1, step: 0.001 }
+                    { label: 'uPerlinFrequency', min: 0, max: 5, step: 0.001 }
                 )
                 
             this.debugFolder

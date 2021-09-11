@@ -23,6 +23,7 @@ export default class Particles
             })
         }
 
+        this.setPositions()
         this.setFlowfield()
         this.setGeometry()
         this.setColor()
@@ -30,31 +31,44 @@ export default class Particles
         this.setPoints()
     }
 
+    setPositions()
+    {
+        this.positions = new Float32Array(this.count * 3)
+
+        for(let i = 0; i < this.count; i++)
+        {
+            const angle = Math.random() * Math.PI * 2
+            this.positions[i * 3 + 0] = Math.sin(angle)
+            this.positions[i * 3 + 1] = Math.cos(angle)
+            this.positions[i * 3 + 2] = 0
+        }
+    }
+
     setFlowfield()
     {
-        this.flowField = new FlowField(this.count)
+        this.flowField = new FlowField(this.positions)
     }
 
     setGeometry()
     {
-        const position = new Float32Array(this.count * 3)
+        
+        const sizes = new Float32Array(this.count)
 
         for(let i = 0; i < this.count; i++)
         {
-            position[i * 3 + 0] = (Math.random() - 0.5) * 2
-            position[i * 3 + 1] = (Math.random() - 0.5) * 2
-            position[i * 3 + 2] = (Math.random() - 0.5) * 2
+            sizes[i] = 0.2 + Math.random() * 0.8
         }
 
         this.geometry = new THREE.BufferGeometry()
-        this.geometry.setAttribute('position', new THREE.BufferAttribute(position, 3))
+        this.geometry.setAttribute('position', new THREE.BufferAttribute(this.positions, 3))
+        this.geometry.setAttribute('aSize', new THREE.BufferAttribute(sizes, 1))
         this.geometry.setAttribute('aFboUv', this.flowField.fboUv.attribute)
     }
 
     setColor()
     {
         this.color = {}
-        this.color.value = '#ff576c'
+        this.color.value = '#ff7f57'
         this.color.instance = new THREE.Color(this.color.value)
         
         if(this.debug)
@@ -83,7 +97,7 @@ export default class Particles
             uniforms:
             {
                 uColor: { value: this.color.instance },
-                uSize: { value: 70 },
+                uSize: { value: 60 },
                 uMaskTexture: { value: this.resources.items.particleMaskTexture },
                 uFBOTexture: { value: this.flowField.texture }
             },

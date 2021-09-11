@@ -1,4 +1,8 @@
+uniform vec3 uColor;
+uniform sampler2D uMaskTexture;
+
 void main()
 {
-    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+    float mask = texture2D(uMaskTexture, gl_PointCoord).r;
+    gl_FragColor = vec4(uColor, mask);
 }

@@ -38,7 +38,7 @@ export default class Smoke
     setColor()
     {
         this.color = {}
-        this.color.value = '#ff521c'
+        this.color.value = '#ff6c3e'
         this.color.instance = new THREE.Color(this.color.value)
         
         if(this.debug)
@@ -71,30 +71,26 @@ export default class Smoke
             item.progress = Math.random()
 
             // Material
-            // item.material = new THREE.MeshBasicMaterial({
-            //     depthTest: false,
-            //     wireframe: true,
-            //     color: 0xffffff,
-            //     transparent: true,
-            // })
             item.material = new THREE.MeshBasicMaterial({
                 depthWrite: false,
                 depthTest: false,
                 transparent: true,
+                blending: THREE.AdditiveBlending,
                 alphaMap: this.resources.items.smokeTexture,
                 opacity: 1
                 // opacity: 0.05 + Math.random() * 0.2
             })
 
             item.material.color = this.color.instance
+            
+            // Scale
+            item.scale = 0.1 + Math.random() * 0.3
+
+            // Angle
+            item.angle = Math.random() * Math.PI * 2
 
             // Mesh
             item.mesh = new THREE.Mesh(this.geometry, item.material)
-            
-            item.scale = 0.1 + Math.random() * 0.3
-
-            item.angle = Math.random() * Math.PI * 2
-
             this.group.add(item.mesh)
 
             // Save

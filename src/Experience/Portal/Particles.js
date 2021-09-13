@@ -14,7 +14,7 @@ export default class Particles
         this.resources = this.experience.resources
         this.scene = this.experience.scene
 
-        this.count = 2000
+        this.count = 5000
 
         if(this.debug)
         {
@@ -68,7 +68,7 @@ export default class Particles
     setColor()
     {
         this.color = {}
-        this.color.value = '#ff7f57'
+        this.color.value = '#ff521c'
         this.color.instance = new THREE.Color(this.color.value)
         
         if(this.debug)

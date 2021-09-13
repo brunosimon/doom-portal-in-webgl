@@ -19,7 +19,6 @@ void main()
 
     float smoke = perlin3d(vec3(smokeUv * vec2(50.0, 15.0), uTime * 0.001));
     smoke *= halo;
-
     smoke *= 2.0;
 
     vec3 color = mix(uColorStart, uColorEnd, smoke);

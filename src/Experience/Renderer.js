@@ -31,7 +31,7 @@ export default class Renderer
 
     setInstance()
     {
-        this.clearColor = '#160f11'
+        this.clearColor = '#160803'
         
         if(this.debug)
         {

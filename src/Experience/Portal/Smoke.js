@@ -38,7 +38,7 @@ export default class Smoke
     setColor()
     {
         this.color = {}
-        this.color.value = '#ff6c3e'
+        this.color.value = '#ff4b04'
         this.color.instance = new THREE.Color(this.color.value)
         
         if(this.debug)
@@ -84,7 +84,7 @@ export default class Smoke
             item.material.color = this.color.instance
             
             // Scale
-            item.scale = 0.1 + Math.random() * 0.3
+            item.scale = 0.2 + Math.random() * 0.5
 
             // Angle
             item.angle = Math.random() * Math.PI * 2
@@ -117,6 +117,7 @@ export default class Smoke
             // Opacity
             _item.material.opacity = Math.min((1 - _item.progress) * 2, _item.progress * 4)
             _item.material.opacity = Math.min(_item.material.opacity, 1)
+            _item.material.opacity *= 0.15
 
             // Scale
             let scaleProgress =Math.min(_item.progress * 4, 1)

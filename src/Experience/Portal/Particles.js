@@ -97,7 +97,7 @@ export default class Particles
             uniforms:
             {
                 uColor: { value: this.color.instance },
-                uSize: { value: 60 },
+                uSize: { value: 40 },
                 uMaskTexture: { value: this.resources.items.particleMaskTexture },
                 uFBOTexture: { value: this.flowField.texture }
             },

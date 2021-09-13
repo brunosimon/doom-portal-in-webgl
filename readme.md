@@ -1,6 +1,7 @@
 # Dooms Portal in WebGL
 
-🚧 This template is under construction
+- [GitHub](https://github.com/brunosimon/dooms-portal-in-webgl)
+- [Live](https://dooms-portal-in-webgl.vercel.app)
 
 ## Setup
 Download [Node.js](https://nodejs.org/en/download/).

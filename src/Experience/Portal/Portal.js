@@ -1,5 +1,6 @@
 import Particles from './Particles.js'
 import Halo from './Halo.js'
+import EventHorizon from './EventHorizon.js'
 import Smoke from './Smoke.js'
 
 export default class Portal
@@ -8,6 +9,7 @@ export default class Portal
     {
         this.setParticles()
         this.setHalo()
+        this.setEventHorizon()
         this.setSmoke()
     }
 
@@ -21,6 +23,11 @@ export default class Portal
         this.halo = new Halo()
     }
 
+    setEventHorizon()
+    {
+        this.eventHorizon = new EventHorizon()
+    }
+
     setSmoke()
     {
         this.smoke = new Smoke()
@@ -30,6 +37,7 @@ export default class Portal
     {
         this.particles.update()
         this.halo.update()
+        this.eventHorizon.update()
         this.smoke.update()
     }
 }

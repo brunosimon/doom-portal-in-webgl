@@ -1,10 +1,10 @@
 import * as THREE from 'three'
 
 import Experience from '../Experience.js'
-import vertexShader from '../shaders/portalHalo/vertex.glsl'
-import fragmentShader from '../shaders/portalHalo/fragment.glsl'
+import vertexShader from '../shaders/portalEventHorizon/vertex.glsl'
+import fragmentShader from '../shaders/portalEventHorizon/fragment.glsl'
 
-export default class Halo
+export default class EventHorizon
 {
     constructor()
     {
@@ -17,7 +17,7 @@ export default class Halo
         if(this.debug)
         {
             this.debugFolder = this.debug.addFolder({
-                title: 'halo'
+                title: 'eventHorizon'
             })
         }
 
@@ -31,17 +31,13 @@ export default class Halo
     {
         this.colors = {}
         
-        this.colors.a = {}
-        this.colors.a.value = '#130000'
-        this.colors.a.instance = new THREE.Color(this.colors.a.value)
+        this.colors.start = {}
+        this.colors.start.value = '#ff3300'
+        this.colors.start.instance = new THREE.Color(this.colors.start.value)
         
-        this.colors.b = {}
-        this.colors.b.value = '#ff3e00'
-        this.colors.b.instance = new THREE.Color(this.colors.b.value)
-        
-        this.colors.c = {}
-        this.colors.c.value = '#ff791e'
-        this.colors.c.instance = new THREE.Color(this.colors.c.value)
+        this.colors.end = {}
+        this.colors.end.value = '#ffda79'
+        this.colors.end.instance = new THREE.Color(this.colors.end.value)
         
         if(this.debug)
         {
@@ -79,9 +75,8 @@ export default class Halo
             uniforms:
             {
                 uTime: { value: 0 },
-                uColorA: { value: this.colors.a.instance },
-                uColorB: { value: this.colors.b.instance },
-                uColorC: { value: this.colors.c.instance }
+                uColorStart: { value: this.colors.start.instance },
+                uColorEnd: { value: this.colors.end.instance }
             },
             vertexShader: vertexShader,
             fragmentShader: fragmentShader

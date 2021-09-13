@@ -94,12 +94,14 @@ export default class Renderer
         // Render pass
         this.postProcess.renderPass = new RenderPass(this.scene, this.camera.instance)
 
+        // Bloom pass
         this.postProcess.unrealBloomPass = new UnrealBloomPass(
             new THREE.Vector2(this.sizes.width, this.sizes.height),
-            1.5,
-            0.4,
-            0.25
+            0.32,
+            0.52,
+            0.2
         )
+        this.postProcess.unrealBloomPass.enabled = false
 
         if(this.debug)
         {

@@ -32,7 +32,7 @@ export default class FlowField
         this.setEnvironment()
         this.setPlane()
         this.setDebugPlane()
-        this.setFBOUv()
+        this.setFboUv()
 
         this.render()
     }
@@ -114,7 +114,7 @@ export default class FlowField
                 uDecaySpeed: { value: 0.00049 },
 
                 uPerlinFrequency: { value: 4 },
-                uPerlinMultiplier: { value: 0.007 },
+                uPerlinMultiplier: { value: 0.004 },
                 uTimeFrequency: { value: 0.0004 }
             },
             vertexShader: vertexShader,
@@ -185,7 +185,7 @@ export default class FlowField
         }
     }
 
-    setFBOUv()
+    setFboUv()
     {
         this.fboUv = {}
 
@@ -233,5 +233,17 @@ export default class FlowField
         this.plane.material.uniforms.uTexture.value = this.renderTargets.secondary.texture
 
         this.render()
+    }
+
+    dispose()
+    {
+        this.baseTexture.dispose()
+        this.renderTargets.a.dispose()
+        this.renderTargets.b.dispose()
+        this.plane.geometry.dispose()
+        this.plane.material.dispose()
+
+        this.debugPlane.geometry.dispose()
+        this.scene.remove(this.debugPlane.mesh)
     }
 }

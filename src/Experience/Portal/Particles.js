@@ -15,13 +15,33 @@ export default class Particles
         this.resources = this.experience.resources
         this.scene = this.experience.scene
 
-        this.count = 5000
+        this.count = 30000
 
         if(this.debug)
         {
             this.debugFolder = this.debug.addFolder({
                 title: 'particles'
             })
+
+            this.debugFolder
+                .addInput(
+                    this,
+                    'count',
+                    {
+                        min: 100, max: 50000, step: 100
+                    }
+                )
+                .on('change', () =>
+                {
+                    this.flowField.dispose()
+                    this.geometry.dispose()
+                    
+                    this.setPositions()
+                    this.setFlowfield()
+                    this.setGeometry()
+
+                    this.points.geometry = this.geometry
+                })
         }
 
         this.setPositions()
@@ -97,7 +117,7 @@ export default class Particles
             uniforms:
             {
                 uColor: { value: this.color.instance },
-                uSize: { value: 40 * this.config.pixelRatio },
+                uSize: { value: 30 * this.config.pixelRatio },
                 uMaskTexture: { value: this.resources.items.particleMaskTexture },
                 uFBOTexture: { value: this.flowField.texture }
             },

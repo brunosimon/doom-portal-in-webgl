@@ -15,7 +15,9 @@ export default class Particles
         this.resources = this.experience.resources
         this.scene = this.experience.scene
 
-        this.count = 30000
+        this.ringCount = 30000
+        this.insideCount = 5000
+        this.count = this.ringCount + this.insideCount
 
         if(this.debug)
         {
@@ -26,21 +28,27 @@ export default class Particles
             this.debugFolder
                 .addInput(
                     this,
-                    'count',
+                    'ringCount',
                     {
                         min: 100, max: 50000, step: 100
                     }
                 )
                 .on('change', () =>
                 {
-                    this.flowField.dispose()
-                    this.geometry.dispose()
-                    
-                    this.setPositions()
-                    this.setFlowfield()
-                    this.setGeometry()
+                    this.reset()
+                })
 
-                    this.points.geometry = this.geometry
+            this.debugFolder
+                .addInput(
+                    this,
+                    'insideCount',
+                    {
+                        min: 100, max: 50000, step: 100
+                    }
+                )
+                .on('change', () =>
+                {
+                    this.reset()
                 })
         }
 
@@ -52,15 +60,37 @@ export default class Particles
         this.setPoints()
     }
 
+    reset()
+    {
+        this.flowField.dispose()
+        this.geometry.dispose()
+        
+        this.setPositions()
+        this.setFlowfield()
+        this.setGeometry()
+
+        this.points.geometry = this.geometry
+    }
+
     setPositions()
     {
         this.positions = new Float32Array(this.count * 3)
 
-        for(let i = 0; i < this.count; i++)
+        let i = 0
+        for(i = 0; i < this.ringCount; i++)
         {
             const angle = Math.random() * Math.PI * 2
             this.positions[i * 3 + 0] = Math.sin(angle)
             this.positions[i * 3 + 1] = Math.cos(angle)
+            this.positions[i * 3 + 2] = 0
+        }
+
+        for(; i < this.count; i++)
+        {
+            const angle = Math.random() * Math.PI * 2
+            const radius = Math.pow(Math.random(), 2) * 1
+            this.positions[i * 3 + 0] = Math.sin(angle) * radius + Math.random() * 0.2
+            this.positions[i * 3 + 1] = Math.cos(angle) * radius + Math.random() * 0.2
             this.positions[i * 3 + 2] = 0
         }
     }

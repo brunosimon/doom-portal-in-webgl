@@ -245,5 +245,10 @@ export default class FlowField
 
         this.debugPlane.geometry.dispose()
         this.scene.remove(this.debugPlane.mesh)
+
+        if(this.debug)
+        {
+            this.debugFolder.dispose()
+        }
     }
 }

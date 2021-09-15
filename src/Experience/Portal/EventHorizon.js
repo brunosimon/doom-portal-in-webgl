@@ -32,11 +32,11 @@ export default class EventHorizon
         this.colors = {}
         
         this.colors.start = {}
-        this.colors.start.value = '#ff3300'
+        this.colors.start.value = '#ff0000'
         this.colors.start.instance = new THREE.Color(this.colors.start.value)
         
         this.colors.end = {}
-        this.colors.end.value = '#ffda79'
+        this.colors.end.value = '#ff6326'
         this.colors.end.instance = new THREE.Color(this.colors.end.value)
         
         if(this.debug)

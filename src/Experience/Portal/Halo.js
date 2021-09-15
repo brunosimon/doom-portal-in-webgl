@@ -36,11 +36,11 @@ export default class Halo
         this.colors.a.instance = new THREE.Color(this.colors.a.value)
         
         this.colors.b = {}
-        this.colors.b.value = '#ff3e00'
+        this.colors.b.value = '#ff000a'
         this.colors.b.instance = new THREE.Color(this.colors.b.value)
         
         this.colors.c = {}
-        this.colors.c.value = '#ff791e'
+        this.colors.c.value = '#ff661e'
         this.colors.c.instance = new THREE.Color(this.colors.c.value)
         
         if(this.debug)

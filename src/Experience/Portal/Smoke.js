@@ -38,7 +38,7 @@ export default class Smoke
     setColor()
     {
         this.color = {}
-        this.color.value = '#ff4b04'
+        this.color.value = '#ff1803'
         this.color.instance = new THREE.Color(this.color.value)
         
         if(this.debug)

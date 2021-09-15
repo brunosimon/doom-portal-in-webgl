@@ -77,6 +77,7 @@ export default class Smoke
                 transparent: true,
                 blending: THREE.AdditiveBlending,
                 alphaMap: this.resources.items.smokeTexture,
+                side: THREE.DoubleSide,
                 opacity: 1
                 // opacity: 0.05 + Math.random() * 0.2
             })

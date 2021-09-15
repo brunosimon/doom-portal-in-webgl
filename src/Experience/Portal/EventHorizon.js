@@ -71,6 +71,7 @@ export default class EventHorizon
         this.material = new THREE.ShaderMaterial({
             transparent: true,
             blending: THREE.AdditiveBlending,
+            side: THREE.DoubleSide,
             // depthWrite: false,
             uniforms:
             {

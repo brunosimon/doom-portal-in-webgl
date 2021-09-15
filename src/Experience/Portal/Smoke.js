@@ -3,15 +3,16 @@ import Experience from '../Experience'
 
 export default class Smoke
 {
-    constructor()
+    constructor(_options)
     {
         this.experience = new Experience()
         this.config = this.experience.config
         this.resources = this.experience.resources
         this.scene = this.experience.scene
         this.time = this.experience.time
-        this.debug = this.experience.debug
         this.world = this.experience.world
+        
+        this.debug = _options.debugFolder
 
         this.count = 40
         this.group = new THREE.Group()

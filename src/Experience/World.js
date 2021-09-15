@@ -15,14 +15,18 @@ export default class World
         {
             if(_group.name === 'base')
             {
-                this.setPortal()
+                this.setPortals()
             }
         })
     }
 
-    setPortal()
+    setPortals()
     {
-        this.portal = new Portal()
+        this.portalA = new Portal()
+        this.portalA.group.position.z = - 2
+
+        this.portalB = new Portal()
+        this.portalB.group.position.z = 2
     }
 
     resize()
@@ -31,8 +35,11 @@ export default class World
 
     update()
     {
-        if(this.portal)
-            this.portal.update()
+        if(this.portalA)
+            this.portalA.update()
+
+        if(this.portalB)
+            this.portalB.update()
     }
 
     destroy()

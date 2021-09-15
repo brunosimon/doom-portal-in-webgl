@@ -6,13 +6,15 @@ import fragmentShader from '../shaders/portalEventHorizon/fragment.glsl'
 
 export default class EventHorizon
 {
-    constructor()
+    constructor(_options)
     {
         this.experience = new Experience()
         this.debug = this.experience.debug
         this.resources = this.experience.resources
         this.scene = this.experience.scene
         this.time = this.experience.time
+        
+        this.debug = _options.debugFolder
 
         if(this.debug)
         {

@@ -7,13 +7,14 @@ import fragmentShader from '../shaders/portalParticles/fragment.glsl'
 
 export default class Particles
 {
-    constructor()
+    constructor(_options)
     {
         this.experience = new Experience()
         this.config = this.experience.config
-        this.debug = this.experience.debug
         this.resources = this.experience.resources
         this.scene = this.experience.scene
+
+        this.debug = _options.debugFolder
 
         this.ringCount = 30000
         this.insideCount = 5000
@@ -97,7 +98,7 @@ export default class Particles
 
     setFlowfield()
     {
-        this.flowField = new FlowField(this.positions)
+        this.flowField = new FlowField({ positions: this.positions, debugFolder: this.debugFolder })
     }
 
     setGeometry()

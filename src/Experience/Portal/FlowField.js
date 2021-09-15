@@ -6,15 +6,16 @@ import fragmentShader from '../shaders/flowField/fragment.glsl'
 
 export default class FlowField
 {
-    constructor(_positions)
+    constructor(_options)
     {
         this.experience = new Experience()
-        this.debug = this.experience.debug
         this.renderer = this.experience.renderer
         this.time = this.experience.time
         this.scene = this.experience.scene
 
-        this.positions = _positions
+        this.positions = _options.positions
+        this.debug = _options.debugFolder
+        
         this.count = this.positions.length / 3
         this.width = 4096
         this.height = Math.ceil(this.count / this.width)

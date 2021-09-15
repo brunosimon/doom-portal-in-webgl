@@ -102,6 +102,7 @@ export default class FlowField
 
         // Material
         this.plane.material = new THREE.ShaderMaterial({
+            // precision: 'highp',
             uniforms:
             {
                 uTime: { value: 0 },
@@ -110,11 +111,11 @@ export default class FlowField
                 uBaseTexture: { value: this.baseTexture },
                 uTexture: { value: this.baseTexture },
 
-                uDecaySpeed: { value: 0.00082 },
+                uDecaySpeed: { value: 0.00049 },
 
                 uPerlinFrequency: { value: 4 },
-                uPerlinMultiplier: { value: 0.004 },
-                uTimeFrequency: { value: 0.0002 }
+                uPerlinMultiplier: { value: 0.007 },
+                uTimeFrequency: { value: 0.0004 }
             },
             vertexShader: vertexShader,
             fragmentShader: fragmentShader

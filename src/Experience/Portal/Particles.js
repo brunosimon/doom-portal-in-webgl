@@ -10,6 +10,7 @@ export default class Particles
     constructor()
     {
         this.experience = new Experience()
+        this.config = this.experience.config
         this.debug = this.experience.debug
         this.resources = this.experience.resources
         this.scene = this.experience.scene
@@ -51,7 +52,6 @@ export default class Particles
 
     setGeometry()
     {
-        
         const sizes = new Float32Array(this.count)
 
         for(let i = 0; i < this.count; i++)
@@ -97,7 +97,7 @@ export default class Particles
             uniforms:
             {
                 uColor: { value: this.color.instance },
-                uSize: { value: 40 },
+                uSize: { value: 40 * this.config.pixelRatio },
                 uMaskTexture: { value: this.resources.items.particleMaskTexture },
                 uFBOTexture: { value: this.flowField.texture }
             },

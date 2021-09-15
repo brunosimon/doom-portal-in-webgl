@@ -30,10 +30,11 @@ void main()
         vec4 baseColor = color;
 
         float time = uTime * uTimeFrequency;
+        float perlinMultiplier = uPerlinMultiplier * uDelta * 0.1;
 
-        color.r += perlin3d(vec3(baseColor.gb * uPerlinFrequency           , time)) * uPerlinMultiplier;
-        color.g += perlin3d(vec3(baseColor.rb * uPerlinFrequency + 123.45  , time)) * uPerlinMultiplier;
-        color.b += perlin3d(vec3(baseColor.rg * uPerlinFrequency + 12345.67, time)) * uPerlinMultiplier;
+        color.r += perlin3d(vec3(baseColor.gb * uPerlinFrequency           , time)) * perlinMultiplier;
+        color.g += perlin3d(vec3(baseColor.rb * uPerlinFrequency + 123.45  , time)) * perlinMultiplier;
+        color.b += perlin3d(vec3(baseColor.rg * uPerlinFrequency + 12345.67, time)) * perlinMultiplier;
     }
 
     gl_FragColor = color;

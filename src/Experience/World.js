@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import Experience from './Experience.js'
 import Portal from './Portal/Portal.js'
+import Environment from './Environment.js'
 
 export default class World
 {
@@ -16,6 +17,7 @@ export default class World
             if(_group.name === 'base')
             {
                 this.setPortals()
+                this.setEnvironment()
             }
         })
     }
@@ -41,6 +43,11 @@ export default class World
             }
         })
         this.portalB.group.position.z = 2
+    }
+
+    setEnvironment()
+    {
+        this.environment = new Environment()
     }
 
     resize()

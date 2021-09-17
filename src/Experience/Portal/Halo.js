@@ -17,12 +17,12 @@ export default class Halo
         this.debug = _options.debugFolder
         this.colors = _options.colors
 
-        if(this.debug)
-        {
-            this.debugFolder = this.debug.addFolder({
-                title: 'halo'
-            })
-        }
+        // if(this.debug)
+        // {
+        //     this.debugFolder = this.debug.addFolder({
+        //         title: 'halo'
+        //     })
+        // }
 
         this.setGeometry()
         this.setMaterial()

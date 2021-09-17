@@ -19,7 +19,8 @@ export default class Portal
         if(this.debug)
         {
             this.debugFolder = this.debug.addFolder({
-                title: 'portal'
+                title: 'portal',
+                expanded: false
             })
         }
 

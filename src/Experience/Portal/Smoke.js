@@ -20,12 +20,12 @@ export default class Smoke
         this.scene.add(this.group)
         this.dummy = new THREE.Object3D()
 
-        if(this.debug)
-        {
-            this.debugFolder = this.debug.addFolder({
-                title: 'smoke'
-            })
-        }
+        // if(this.debug)
+        // {
+        //     this.debugFolder = this.debug.addFolder({
+        //         title: 'smoke'
+        //     })
+        // }
 
         this.setGeometry()
         this.setItems()
@@ -51,7 +51,7 @@ export default class Smoke
             // Material
             item.material = new THREE.MeshBasicMaterial({
                 depthWrite: false,
-                depthTest: false,
+                // depthTest: false,
                 transparent: true,
                 blending: THREE.AdditiveBlending,
                 alphaMap: this.resources.items.smokeTexture,
@@ -70,6 +70,7 @@ export default class Smoke
 
             // Mesh
             item.mesh = new THREE.Mesh(this.geometry, item.material)
+            item.mesh.position.z = i * 0.0005
             this.group.add(item.mesh)
 
             // Save

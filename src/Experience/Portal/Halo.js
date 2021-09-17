@@ -15,6 +15,7 @@ export default class Halo
         this.time = this.experience.time
         
         this.debug = _options.debugFolder
+        this.colors = _options.colors
 
         if(this.debug)
         {
@@ -23,48 +24,9 @@ export default class Halo
             })
         }
 
-        this.setColors()
         this.setGeometry()
         this.setMaterial()
         this.setMesh()
-    }
-
-    setColors()
-    {
-        this.colors = {}
-        
-        this.colors.a = {}
-        this.colors.a.value = '#130000'
-        this.colors.a.instance = new THREE.Color(this.colors.a.value)
-        
-        this.colors.b = {}
-        this.colors.b.value = '#ff000a'
-        this.colors.b.instance = new THREE.Color(this.colors.b.value)
-        
-        this.colors.c = {}
-        this.colors.c.value = '#ff661e'
-        this.colors.c.instance = new THREE.Color(this.colors.c.value)
-        
-        if(this.debug)
-        {
-            for(const _colorName in this.colors)
-            {
-                const color = this.colors[_colorName]
-
-                this.debugFolder
-                    .addInput(
-                        color,
-                        'value',
-                        {
-                            label: _colorName, view: 'color'
-                        }
-                    )
-                    .on('change', () =>
-                    {
-                        color.instance.set(color.value)
-                    })
-            }
-        }
     }
 
     setGeometry()

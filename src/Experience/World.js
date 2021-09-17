@@ -22,10 +22,24 @@ export default class World
 
     setPortals()
     {
-        this.portalA = new Portal()
+        this.portalA = new Portal({
+            colors:
+            {
+                a: '#130000',
+                b: '#ff000a',
+                c: '#ff661e',
+            }
+        })
         this.portalA.group.position.z = - 2
 
-        this.portalB = new Portal()
+        this.portalB = new Portal({
+            colors:
+            {
+                a: '#000813',
+                b: '#0078ff',
+                c: '#279fff',
+            }
+        })
         this.portalB.group.position.z = 2
     }
 

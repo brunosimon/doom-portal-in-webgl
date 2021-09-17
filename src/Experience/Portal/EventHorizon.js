@@ -15,6 +15,7 @@ export default class EventHorizon
         this.time = this.experience.time
         
         this.debug = _options.debugFolder
+        this.colors = _options.colors
 
         if(this.debug)
         {
@@ -23,44 +24,9 @@ export default class EventHorizon
             })
         }
 
-        this.setColors()
         this.setGeometry()
         this.setMaterial()
         this.setMesh()
-    }
-
-    setColors()
-    {
-        this.colors = {}
-        
-        this.colors.start = {}
-        this.colors.start.value = '#ff0000'
-        this.colors.start.instance = new THREE.Color(this.colors.start.value)
-        
-        this.colors.end = {}
-        this.colors.end.value = '#ff6326'
-        this.colors.end.instance = new THREE.Color(this.colors.end.value)
-        
-        if(this.debug)
-        {
-            for(const _colorName in this.colors)
-            {
-                const color = this.colors[_colorName]
-
-                this.debugFolder
-                    .addInput(
-                        color,
-                        'value',
-                        {
-                            label: _colorName, view: 'color'
-                        }
-                    )
-                    .on('change', () =>
-                    {
-                        color.instance.set(color.value)
-                    })
-            }
-        }
     }
 
     setGeometry()
@@ -78,8 +44,8 @@ export default class EventHorizon
             uniforms:
             {
                 uTime: { value: 0 },
-                uColorStart: { value: this.colors.start.instance },
-                uColorEnd: { value: this.colors.end.instance }
+                uColorStart: { value: this.colors.b.instance },
+                uColorEnd: { value: this.colors.c.instance }
             },
             vertexShader: vertexShader,
             fragmentShader: fragmentShader

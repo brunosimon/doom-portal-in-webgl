@@ -13,6 +13,7 @@ export default class Smoke
         this.world = this.experience.world
         
         this.debug = _options.debugFolder
+        this.colors = _options.colors
 
         this.count = 40
         this.group = new THREE.Group()
@@ -27,36 +28,12 @@ export default class Smoke
         }
 
         this.setGeometry()
-        this.setColor()
         this.setItems()
     }
 
     setGeometry()
     {
         this.geometry = new THREE.PlaneGeometry(1, 1, 1, 1)
-    }
-
-    setColor()
-    {
-        this.color = {}
-        this.color.value = '#ff1803'
-        this.color.instance = new THREE.Color(this.color.value)
-        
-        if(this.debug)
-        {
-            this.debugFolder
-                .addInput(
-                    this.color,
-                    'value',
-                    {
-                        view: 'color'
-                    }
-                )
-                .on('change', () =>
-                {
-                    this.color.instance.set(this.color.value)
-                })
-        }
     }
 
     setItems()
@@ -83,7 +60,7 @@ export default class Smoke
                 // opacity: 0.05 + Math.random() * 0.2
             })
 
-            item.material.color = this.color.instance
+            item.material.color = this.colors.b.instance
             
             // Scale
             item.scale = 0.2 + Math.random() * 0.5
@@ -119,7 +96,7 @@ export default class Smoke
             // Opacity
             _item.material.opacity = Math.min((1 - _item.progress) * 2, _item.progress * 4)
             _item.material.opacity = Math.min(_item.material.opacity, 1)
-            _item.material.opacity *= 0.15
+            _item.material.opacity *= 0.25
 
             // Scale
             let scaleProgress =Math.min(_item.progress * 4, 1)

@@ -15,6 +15,7 @@ export default class Particles
         this.scene = this.experience.scene
 
         this.debug = _options.debugFolder
+        this.colors = _options.colors
 
         this.ringCount = 30000
         this.insideCount = 5000
@@ -56,7 +57,6 @@ export default class Particles
         this.setPositions()
         this.setFlowfield()
         this.setGeometry()
-        this.setColor()
         this.setMaterial()
         this.setPoints()
     }
@@ -116,29 +116,6 @@ export default class Particles
         this.geometry.setAttribute('aFboUv', this.flowField.fboUv.attribute)
     }
 
-    setColor()
-    {
-        this.color = {}
-        this.color.value = '#ff521c'
-        this.color.instance = new THREE.Color(this.color.value)
-        
-        if(this.debug)
-        {
-            this.debugFolder
-                .addInput(
-                    this.color,
-                    'value',
-                    {
-                        view: 'color'
-                    }
-                )
-                .on('change', () =>
-                {
-                    this.color.instance.set(this.color.value)
-                })
-        }
-    }
-
     setMaterial()
     {
         this.material = new THREE.ShaderMaterial({
@@ -147,7 +124,7 @@ export default class Particles
             depthWrite: false,
             uniforms:
             {
-                uColor: { value: this.color.instance },
+                uColor: { value: this.colors.c.instance },
                 uSize: { value: 30 * this.config.pixelRatio },
                 uMaskTexture: { value: this.resources.items.particleMaskTexture },
                 uFBOTexture: { value: this.flowField.texture }
@@ -165,10 +142,6 @@ export default class Particles
                     'value',
                     { label: 'uSize', min: 1, max: 100, step: 1 }
                 )
-                .on('change', () =>
-                {
-                    this.color.instance.set(this.color.value)
-                })
         }
     }
 

@@ -36,11 +36,6 @@ export default class Environment
         this.textures.color.wrapT = THREE.RepeatWrapping
         this.textures.color.repeat.set(this.textures.repeatCount, this.textures.repeatCount)
 
-        this.textures.ambientOcclusion = this.resources.items.floorAmbientOcclusionTexture
-        this.textures.ambientOcclusion.wrapS = THREE.RepeatWrapping
-        this.textures.ambientOcclusion.wrapT = THREE.RepeatWrapping
-        this.textures.ambientOcclusion.repeat.set(this.textures.repeatCount, this.textures.repeatCount)
-
         this.textures.normal = this.resources.items.floorNormalTexture
         this.textures.normal.wrapS = THREE.RepeatWrapping
         this.textures.normal.wrapT = THREE.RepeatWrapping
@@ -63,22 +58,20 @@ export default class Environment
 
         this.floor.geometry = new THREE.PlaneGeometry(10, 10, 500, 500)
         this.floor.geometry.rotateX(- Math.PI * 0.5)
-        this.floor.geometry.setAttribute('uv2', new THREE.BufferAttribute(this.floor.geometry.attributes.uv.array, 2))
+        this.floor.geometry.attributes.uv2 = this.floor.geometry.attributes.uv
 
         this.floor.material = new THREE.MeshStandardMaterial({
             map: this.textures.color,
             normalMap: this.textures.normal,
-            normalScale: new THREE.Vector2(0.2, 0.2),
+            normalScale: new THREE.Vector2(1, 1),
             displacementMap: this.textures.displacement,
             displacementScale: 0.1,
             roughnessMap: this.textures.roughness,
-            roughness: 10
-            // aoMap: this.textures.ambientOcclusion,
-            // aoMapIntensity: 1000
+            roughness: 1
         })
-        
+
         this.floor.mesh = new THREE.Mesh(this.floor.geometry, this.floor.material)
-        this.floor.mesh.position.y = - 0.9
+        this.floor.mesh.position.y = - 0.95
         this.scene.add(this.floor.mesh)
     }
 
@@ -103,6 +96,7 @@ export default class Environment
 
         this.lights.items.a.instance = new THREE.RectAreaLight(this.lights.items.a.color, 10, 1.03, 2)
         this.lights.items.a.instance.rotation.y = Math.PI
+        this.lights.items.a.instance.position.y = - 0.5
         this.lights.items.a.instance.position.z = - 2.001
         this.scene.add(this.lights.items.a.instance)
 
@@ -116,6 +110,7 @@ export default class Environment
         this.lights.items.b.color = '#0059ff'
 
         this.lights.items.b.instance = new THREE.RectAreaLight(this.lights.items.b.color, 10, 1.03, 2)
+        this.lights.items.b.instance.position.y = - 0.5
         this.lights.items.b.instance.position.z = 2.001
         this.scene.add(this.lights.items.b.instance)
 

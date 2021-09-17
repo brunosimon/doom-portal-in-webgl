@@ -1,7 +1,7 @@
-# Dooms Portal in WebGL
+# Doom Portal in WebGL
 
-- [GitHub](https://github.com/brunosimon/dooms-portal-in-webgl)
-- [Live](https://dooms-portal-in-webgl.vercel.app)
+- [GitHub](https://github.com/brunosimon/doom-portal-in-webgl)
+- [Live](https://doom-portal-in-webgl.vercel.app)
 
 ## Setup
 Download [Node.js](https://nodejs.org/en/download/).

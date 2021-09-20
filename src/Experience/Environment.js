@@ -58,12 +58,14 @@ export default class Environment
 
         this.floor.clean = false
 
+        // Geometry
         this.floor.geometry = new THREE.PlaneGeometry(10, 10, 500, 500)
         this.floor.geometry.rotateX(- Math.PI * 0.5)
         this.floor.geometry.attributes.uv2 = this.floor.geometry.attributes.uv
 
         this.floor.normalScale = 1
 
+        // Material
         this.floor.material = new THREE.MeshStandardMaterial({
             map: this.textures.color,
             normalMap: this.textures.normal,
@@ -74,6 +76,23 @@ export default class Environment
             roughness: 1
         })
 
+        this.floor.material.onBeforeCompile = (_shader) =>
+        {
+            _shader.fragmentShader = _shader.fragmentShader.replace(
+                'gl_FragColor = vec4(',
+                `
+                    float fadeOut = length(vUv - ${(0.5 * this.textures.repeatCount).toFixed(2)});
+                    fadeOut -= 0.6;
+                    fadeOut *= 3.0;
+                    fadeOut = smoothstep(0.0, 1.0, fadeOut);
+                    outgoingLight = mix(outgoingLight, vec3(0.0), fadeOut);
+                    // outgoingLight = vec3(fadeOut);
+                    gl_FragColor = vec4(
+                `
+            )
+        }
+
+        // Mesh
         this.floor.mesh = new THREE.Mesh(this.floor.geometry, this.floor.material)
         this.floor.mesh.position.y = - 0.95
         this.scene.add(this.floor.mesh)

@@ -56,14 +56,18 @@ export default class Environment
     {
         this.floor = {}
 
+        this.floor.clean = false
+
         this.floor.geometry = new THREE.PlaneGeometry(10, 10, 500, 500)
         this.floor.geometry.rotateX(- Math.PI * 0.5)
         this.floor.geometry.attributes.uv2 = this.floor.geometry.attributes.uv
 
+        this.floor.normalScale = 1
+
         this.floor.material = new THREE.MeshStandardMaterial({
             map: this.textures.color,
             normalMap: this.textures.normal,
-            normalScale: new THREE.Vector2(1, 1),
+            normalScale: new THREE.Vector2(this.floor.normalScale, this.floor.normalScale),
             displacementMap: this.textures.displacement,
             displacementScale: 0.1,
             roughnessMap: this.textures.roughness,
@@ -73,6 +77,82 @@ export default class Environment
         this.floor.mesh = new THREE.Mesh(this.floor.geometry, this.floor.material)
         this.floor.mesh.position.y = - 0.95
         this.scene.add(this.floor.mesh)
+
+        if(this.debug)
+        {
+            this.floor.debugFolder = this.debugFolder.addFolder({
+                title: 'floor'
+            })
+
+            this.floor.debugFolder
+                .addInput(
+                    this.floor.material,
+                    'displacementScale',
+                    {
+                        min: 0, max: 1, step: 0.001
+                    }
+                )
+
+            this.floor.debugFolder
+                .addInput(
+                    this.floor.material,
+                    'wireframe'
+                )
+
+            this.floor.debugFolder
+                .addInput(
+                    this.floor,
+                    'normalScale',
+                    {
+                        min: 0, max: 2, step: 0.001
+                    }
+                )
+                .on('change', () =>
+                {
+                    this.floor.material.normalScale.set(this.floor.normalScale, this.floor.normalScale)
+                })
+
+            this.floor.debugFolder
+                .addInput(
+                    this.floor.material,
+                    'roughness',
+                    {
+                        min: 0, max: 5, step: 0.001
+                    }
+                )
+
+            this.floor.debugFolder
+                .addInput(
+                    this.floor.mesh.position,
+                    'y',
+                    {
+                        min: - 2, max: 0, step: 0.001
+                    }
+                )
+
+            this.floor.debugFolder
+                .addInput(
+                    this.floor,
+                    'clean'
+                )
+                .on('change', () =>
+                {
+                    if(this.floor.clean)
+                    {
+                        this.floor.material.map = null
+                        this.floor.material.normalMap = null
+                        this.floor.material.displacementMap = null
+                    }
+                    else
+                    {
+                        this.floor.material.map = this.textures.color
+                        this.floor.material.normalMap = this.textures.normal
+                        this.floor.material.displacementMap = this.textures.displacement
+                    }
+
+                    this.floor.material.needsUpdate = true
+                })
+        }
     }
 
     setLights()
@@ -94,35 +174,44 @@ export default class Environment
 
         this.lights.items.a.color = '#ff0a00'
 
-        this.lights.items.a.instance = new THREE.RectAreaLight(this.lights.items.a.color, 10, 1.03, 2)
+        this.lights.items.a.instance = new THREE.PointLight(this.lights.items.a.color, 6)
         this.lights.items.a.instance.rotation.y = Math.PI
         this.lights.items.a.instance.position.y = - 0.5
         this.lights.items.a.instance.position.z = - 2.001
         this.scene.add(this.lights.items.a.instance)
 
-        this.lights.items.a.helper = new RectAreaLightHelper(this.lights.items.a.instance)
-        this.lights.items.a.helper.visible = false
-        this.scene.add(this.lights.items.a.helper)
+        // this.lights.items.a.helper = new RectAreaLightHelper(this.lights.items.a.instance)
+        // this.lights.items.a.helper.visible = false
+        // this.scene.add(this.lights.items.a.helper)
         
         // B light
         this.lights.items.b = {}
 
         this.lights.items.b.color = '#0059ff'
 
-        this.lights.items.b.instance = new THREE.RectAreaLight(this.lights.items.b.color, 10, 1.03, 2)
+        this.lights.items.b.instance = new THREE.PointLight(this.lights.items.b.color, 6)
         this.lights.items.b.instance.position.y = - 0.5
         this.lights.items.b.instance.position.z = 2.001
         this.scene.add(this.lights.items.b.instance)
 
-        this.lights.items.b.helper = new RectAreaLightHelper(this.lights.items.b.instance)
-        this.lights.items.b.helper.visible = false
-        this.scene.add(this.lights.items.b.helper)
+        // this.lights.items.b.helper = new RectAreaLightHelper(this.lights.items.b.instance)
+        // this.lights.items.b.helper.visible = false
+        // this.scene.add(this.lights.items.b.helper)
         
         if(this.debug)
         {
             for(const _lightName in this.lights.items)
             {
                 const light = this.lights.items[_lightName]
+
+                this.lights.debugFolder
+                    .addInput(
+                        light.instance.position,
+                        'y',
+                        {
+                            label: `${_lightName}Y`, min: - 2, max: 2, step: 0.001
+                        }
+                    )
 
                 this.lights.debugFolder
                     .addInput(
@@ -146,32 +235,32 @@ export default class Environment
                         }
                     )
 
-                this.lights.debugFolder
-                    .addInput(
-                        light.instance,
-                        'width',
-                        {
-                            label: `${_lightName}Width`, min: 0, max: 5, step: 0.01
-                        }
-                    )
+                // this.lights.debugFolder
+                //     .addInput(
+                //         light.instance,
+                //         'width',
+                //         {
+                //             label: `${_lightName}Width`, min: 0, max: 5, step: 0.01
+                //         }
+                //     )
 
-                this.lights.debugFolder
-                    .addInput(
-                        light.instance,
-                        'height',
-                        {
-                            label: `${_lightName}height`, min: 0, max: 5, step: 0.01
-                        }
-                    )
+                // this.lights.debugFolder
+                //     .addInput(
+                //         light.instance,
+                //         'height',
+                //         {
+                //             label: `${_lightName}height`, min: 0, max: 5, step: 0.01
+                //         }
+                //     )
 
-                this.lights.debugFolder
-                    .addInput(
-                        light.helper,
-                        'visible',
-                        {
-                            label: `${_lightName}HelperVisible`
-                        }
-                    )
+                // this.lights.debugFolder
+                //     .addInput(
+                //         light.helper,
+                //         'visible',
+                //         {
+                //             label: `${_lightName}HelperVisible`
+                //         }
+                //     )
             }
         }
     }

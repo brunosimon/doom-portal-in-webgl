@@ -1,7 +1,11 @@
 import * as THREE from 'three'
+
 import Experience from '../Experience'
 
-export default class Smoke
+import vertexShader from '../shaders/lightnings/vertex.glsl'
+import fragmentShader from '../shaders/lightnings/fragment.glsl'
+
+export default class Lightnings
 {
     constructor(_options)
     {
@@ -15,7 +19,7 @@ export default class Smoke
         this.debug = _options.debugFolder
         this.colors = _options.colors
 
-        this.count = 40
+        this.count = 4
         this.group = new THREE.Group()
         this.scene.add(this.group)
         this.dummy = new THREE.Object3D()
@@ -49,28 +53,40 @@ export default class Smoke
             item.progress = Math.random()
 
             // Material
-            item.material = new THREE.MeshBasicMaterial({
+            // item.material = new THREE.MeshBasicMaterial({
+            //     // wireframe: true,
+            //     depthWrite: false,
+            //     transparent: true,
+            //     blending: THREE.AdditiveBlending,
+            //     alphaMap: this.resources.items.lightningTexture,
+            //     side: THREE.DoubleSide,
+            //     opacity: 1
+            //     // opacity: 0.05 + Math.random() * 0.2
+            // })
+            item.material = new THREE.ShaderMaterial({
                 depthWrite: false,
-                // depthTest: false,
                 transparent: true,
                 blending: THREE.AdditiveBlending,
-                alphaMap: this.resources.items.smokeTexture,
                 side: THREE.DoubleSide,
-                opacity: 1
-                // opacity: 0.05 + Math.random() * 0.2
+                uniforms:
+                {
+                    uMaskTexture: { value: this.resources.items.lightningTexture },
+                    uColor: { value: this.colors.c.instance },
+                    uAlpha: { value: 1 },
+                },
+                vertexShader: vertexShader,
+                fragmentShader: fragmentShader
             })
 
-            item.material.color = this.colors.b.instance
-            
             // Scale
-            item.scale = 0.2 + Math.random() * 0.5
+            item.scale = 0.5 + Math.random() * 1.5
 
             // Angle
             item.angle = Math.random() * Math.PI * 2
 
             // Mesh
             item.mesh = new THREE.Mesh(this.geometry, item.material)
-            item.mesh.position.z = (i + 1) * 0.0005
+            item.mesh.position.z = - (i + 0.5) * 0.0005
             this.group.add(item.mesh)
 
             // Save
@@ -89,22 +105,18 @@ export default class Smoke
         for(const _item of this.items)
         {
             // Progress
-            _item.progress += this.time.delta * 0.0001
+            _item.progress += this.time.delta * 0.0005
 
             if(_item.progress > 1)
+            {
                 _item.progress = 0
+                _item.angle = Math.random() * Math.PI * 2
+            }
 
             // Opacity
-            _item.material.opacity = Math.min((1 - _item.progress) * 2, _item.progress * 4)
-            _item.material.opacity = Math.min(_item.material.opacity, 1)
-            _item.material.opacity *= 0.25
-
-            // Scale
-            let scaleProgress =Math.min(_item.progress * 4, 1)
-            scaleProgress = 1 - Math.pow(1 - scaleProgress, 4)
-            const scale = scaleProgress * _item.scale
-
-            _item.mesh.scale.set(scale, scale, scale)
+            _item.material.uniforms.uAlpha.value = Math.min((1 - _item.progress) * 8, _item.progress * 200)
+            _item.material.uniforms.uAlpha.value = Math.min(_item.material.uniforms.uAlpha.value, 1)
+            // _item.material.opacity *= 0.25
 
             // Rotation
             _item.mesh.rotation.z = elapsedTime * _item.rotationSpeed

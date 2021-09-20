@@ -5,6 +5,7 @@ export default [
         items:
         [
             { name: 'smokeTexture', source: '/assets/smoke.png', type: 'texture' },
+            { name: 'lightningTexture', source: '/assets/lightning.png', type: 'texture' },
             { name: 'particleMaskTexture', source: '/assets/particleMask.png', type: 'texture' },
             
             { name: 'floorColorTexture', source: '/assets/floor/GroundForest003_COL_VAR1_3K.jpg', type: 'texture' },

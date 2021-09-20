@@ -5,6 +5,7 @@ import Particles from './Particles.js'
 import Halo from './Halo.js'
 import EventHorizon from './EventHorizon.js'
 import Smoke from './Smoke.js'
+import Lightnings from './Lightnings.js'
 
 export default class Portal
 {
@@ -32,6 +33,7 @@ export default class Portal
         this.setHalo()
         this.setEventHorizon()
         this.setSmoke()
+        this.setLightnins()
     }
 
     setColors()
@@ -93,11 +95,18 @@ export default class Portal
         this.group.add(this.smoke.group)
     }
 
+    setLightnins()
+    {
+        this.lightnings = new Lightnings({ debugFolder: this.debugFolder, colors: this.colors })
+        this.group.add(this.lightnings.group)
+    }
+
     update()
     {
         this.particles.update()
         this.halo.update()
         this.eventHorizon.update()
         this.smoke.update()
+        this.lightnings.update()
     }
 }

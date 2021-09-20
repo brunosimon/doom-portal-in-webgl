@@ -40,7 +40,7 @@ export default class Halo
             transparent: true,
             blending: THREE.AdditiveBlending,
             side: THREE.DoubleSide,
-            // depthWrite: false,
+            depthWrite: false,
             uniforms:
             {
                 uTime: { value: 0 },

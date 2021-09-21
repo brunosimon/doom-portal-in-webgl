@@ -84,8 +84,8 @@ export default class Environment
                 'gl_FragColor = vec4(',
                 `
                     float fadeOut = length(vUv - ${(0.5 * this.textures.repeatCount).toFixed(2)});
-                    fadeOut -= 0.6;
-                    fadeOut *= 3.0;
+                    fadeOut -= 0.4;
+                    fadeOut *= 2.0;
                     fadeOut = smoothstep(0.0, 1.0, fadeOut);
                     outgoingLight = mix(outgoingLight, vec3(0.0), fadeOut);
                     // outgoingLight = vec3(fadeOut);
@@ -201,11 +201,9 @@ export default class Environment
         this.lights.items.a.instance.position.y = - 0.5
         this.lights.items.a.instance.position.z = - 1.501
         this.lights.items.a.instance.castShadow = true
-        this.lights.items.a.instance.shadow.camera.far = 4
+        this.lights.items.a.instance.shadow.camera.far = 7
         this.lights.items.a.instance.shadow.normalBias = 0.005
         this.scene.add(this.lights.items.a.instance)
-
-        console.log(this.lights.items.a.instance.shadow.camera.far)
 
         // this.lights.items.a.helper = new RectAreaLightHelper(this.lights.items.a.instance)
         // this.lights.items.a.helper.visible = false
@@ -220,7 +218,7 @@ export default class Environment
         this.lights.items.b.instance.position.y = - 0.5
         this.lights.items.b.instance.position.z = 1.501
         this.lights.items.b.instance.castShadow = true
-        this.lights.items.b.instance.shadow.camera.far = 4
+        this.lights.items.b.instance.shadow.camera.far = 7
         this.lights.items.b.instance.shadow.normalBias = 0.005
         this.scene.add(this.lights.items.b.instance)
 

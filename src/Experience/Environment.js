@@ -201,8 +201,11 @@ export default class Environment
         this.lights.items.a.instance.position.y = - 0.5
         this.lights.items.a.instance.position.z = - 1.501
         this.lights.items.a.instance.castShadow = true
-        this.lights.items.a.instance.shadow.normalBias = 0.006
+        this.lights.items.a.instance.shadow.camera.far = 4
+        this.lights.items.a.instance.shadow.normalBias = 0.005
         this.scene.add(this.lights.items.a.instance)
+
+        console.log(this.lights.items.a.instance.shadow.camera.far)
 
         // this.lights.items.a.helper = new RectAreaLightHelper(this.lights.items.a.instance)
         // this.lights.items.a.helper.visible = false
@@ -217,7 +220,8 @@ export default class Environment
         this.lights.items.b.instance.position.y = - 0.5
         this.lights.items.b.instance.position.z = 1.501
         this.lights.items.b.instance.castShadow = true
-        this.lights.items.b.instance.shadow.normalBias = 0.006
+        this.lights.items.b.instance.shadow.camera.far = 4
+        this.lights.items.b.instance.shadow.normalBias = 0.005
         this.scene.add(this.lights.items.b.instance)
 
         // this.lights.items.b.helper = new RectAreaLightHelper(this.lights.items.b.instance)

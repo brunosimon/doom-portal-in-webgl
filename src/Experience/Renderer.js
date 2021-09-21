@@ -125,7 +125,7 @@ export default class Renderer
             0.52,
             0.2
         )
-        this.postProcess.unrealBloomPass.enabled = false
+        this.postProcess.unrealBloomPass.enabled = true
 
         if(this.debug)
         {

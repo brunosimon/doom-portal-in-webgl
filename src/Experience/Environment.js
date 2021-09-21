@@ -22,6 +22,7 @@ export default class Environment
         this.setTextures()
         this.setFloor()
         this.setLights()
+        this.setDoomGuy()
     }
     
     setTextures()
@@ -281,6 +282,44 @@ export default class Environment
                 //         }
                 //     )
             }
+        }
+    }
+
+    setDoomGuy()
+    {
+        this.doomGuy = {}
+
+        this.doomGuy.model = this.resources.items.doomGuyModel.scene
+        this.doomGuy.model.scale.set(0.017, 0.017, 0.017)
+
+        this.doomGuy.model.position.y = - 0.93
+        this.doomGuy.model.rotation.y = 1.981
+
+        this.scene.add(this.doomGuy.model)
+        
+        if(this.debug)
+        {
+            this.doomGuy.debugFolder = this.debugFolder.addFolder({
+                title: 'doomGuy'
+            })
+
+            this.doomGuy.debugFolder
+                .addInput(
+                    this.doomGuy.model.position,
+                    'y',
+                    {
+                        min: - 2, max: 0, step: 0.001
+                    }
+                )
+
+            this.doomGuy.debugFolder
+                .addInput(
+                    this.doomGuy.model.rotation,
+                    'y',
+                    {
+                        min: - Math.PI, max: Math.PI, step: 0.001
+                    }
+                )
         }
     }
 }

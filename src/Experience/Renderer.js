@@ -72,8 +72,7 @@ export default class Renderer
         // this.instance.shadowMap.type = THREE.PCFSoftShadowMap
         // this.instance.shadowMap.enabled = false
         // this.instance.toneMapping = THREE.ReinhardToneMapping
-        // this.instance.toneMapping = THREE.ReinhardToneMapping
-        // this.instance.toneMappingExposure = 1.3
+        // this.instance.toneMappingExposure = 2.3
 
         this.context = this.instance.getContext()
 

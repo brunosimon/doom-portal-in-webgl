@@ -32,7 +32,7 @@ export default class World
                 c: '#ff661e',
             }
         })
-        this.portalA.group.position.z = - 2
+        this.portalA.group.position.z = - 1.5
 
         this.portalB = new Portal({
             colors:
@@ -42,7 +42,7 @@ export default class World
                 c: '#279fff',
             }
         })
-        this.portalB.group.position.z = 2
+        this.portalB.group.position.z = 1.5
     }
 
     setEnvironment()

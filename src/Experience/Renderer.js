@@ -69,8 +69,10 @@ export default class Renderer
         this.instance.physicallyCorrectLights = true
         // this.instance.gammaOutPut = true
         this.instance.outputEncoding = THREE.sRGBEncoding
-        // this.instance.shadowMap.type = THREE.PCFSoftShadowMap
-        // this.instance.shadowMap.enabled = false
+        this.instance.shadowMap.type = THREE.PCFSoftShadowMap
+        this.instance.shadowMap.enabled = true
+        this.instance.shadowMap.autoUpdate = false
+        this.instance.shadowMap.needsUpdate = this.instance.shadowMap.enabled
         // this.instance.toneMapping = THREE.ReinhardToneMapping
         // this.instance.toneMappingExposure = 2.3
 
@@ -80,6 +82,29 @@ export default class Renderer
         if(this.stats)
         {
             this.stats.setRenderPanel(this.context)
+        }
+
+        // Debug
+        if(this.debug)
+        {
+            this.debugFolder
+                .addInput(
+                    this.instance.shadowMap,
+                    'enabled',
+                    { label: 'shadowMapEnabled' }
+                )
+                .on('change', () =>
+                {
+                    this.scene.traverse((_child) =>
+                    {
+                        if(_child instanceof THREE.Mesh)
+                        {
+                            _child.material.needsUpdate = true
+                        }
+                    })
+
+                    this.instance.shadowMap.needsUpdate = true
+                })
         }
     }
 

@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { RectAreaLightHelper } from 'three/examples/jsm/helpers/RectAreaLightHelper.js'
+// import { RectAreaLightHelper } from 'three/examples/jsm/helpers/RectAreaLightHelper.js'
 
 import Experience from './Experience.js'
 
@@ -11,6 +11,7 @@ export default class Environment
         this.debug = this.experience.debug
         this.scene = this.experience.scene
         this.resources = this.experience.resources
+        this.renderer = this.experience.renderer
 
         if(this.debug)
         {
@@ -96,6 +97,7 @@ export default class Environment
         // Mesh
         this.floor.mesh = new THREE.Mesh(this.floor.geometry, this.floor.material)
         this.floor.mesh.position.y = - 0.95
+        this.floor.mesh.receiveShadow = true
         this.scene.add(this.floor.mesh)
 
         if(this.debug)
@@ -194,10 +196,12 @@ export default class Environment
 
         this.lights.items.a.color = '#ff0a00'
 
-        this.lights.items.a.instance = new THREE.PointLight(this.lights.items.a.color, 6)
+        this.lights.items.a.instance = new THREE.PointLight(this.lights.items.a.color, 11)
         this.lights.items.a.instance.rotation.y = Math.PI
         this.lights.items.a.instance.position.y = - 0.5
-        this.lights.items.a.instance.position.z = - 2.001
+        this.lights.items.a.instance.position.z = - 1.501
+        this.lights.items.a.instance.castShadow = true
+        this.lights.items.a.instance.shadow.normalBias = 0.006
         this.scene.add(this.lights.items.a.instance)
 
         // this.lights.items.a.helper = new RectAreaLightHelper(this.lights.items.a.instance)
@@ -209,9 +213,11 @@ export default class Environment
 
         this.lights.items.b.color = '#0059ff'
 
-        this.lights.items.b.instance = new THREE.PointLight(this.lights.items.b.color, 6)
+        this.lights.items.b.instance = new THREE.PointLight(this.lights.items.b.color, 11)
         this.lights.items.b.instance.position.y = - 0.5
-        this.lights.items.b.instance.position.z = 2.001
+        this.lights.items.b.instance.position.z = 1.501
+        this.lights.items.b.instance.castShadow = true
+        this.lights.items.b.instance.shadow.normalBias = 0.006
         this.scene.add(this.lights.items.b.instance)
 
         // this.lights.items.b.helper = new RectAreaLightHelper(this.lights.items.b.instance)
@@ -289,11 +295,21 @@ export default class Environment
     {
         this.doomGuy = {}
 
-        this.doomGuy.model = this.resources.items.doomGuyModel.scene
-        this.doomGuy.model.scale.set(0.017, 0.017, 0.017)
+        this.doomGuy.scale = 0.017
 
+        this.doomGuy.model = this.resources.items.doomGuyModel.scene
+        this.doomGuy.model.scale.set(this.doomGuy.scale, this.doomGuy.scale, this.doomGuy.scale)
         this.doomGuy.model.position.y = - 0.93
-        this.doomGuy.model.rotation.y = 1.981
+        this.doomGuy.model.rotation.y = - 2.595
+
+        this.doomGuy.model.traverse((_child) =>
+        {
+            if(_child instanceof THREE.Mesh)
+            {
+                _child.receiveShadow = true
+                _child.castShadow = true
+            }
+        })
 
         this.scene.add(this.doomGuy.model)
         
@@ -308,18 +324,40 @@ export default class Environment
                     this.doomGuy.model.position,
                     'y',
                     {
-                        min: - 2, max: 0, step: 0.001
+                        label: 'positionY', min: - 2, max: 0, step: 0.001
                     }
                 )
+                .on('change', () =>
+                {
+                    this.renderer.instance.shadowMap.needsUpdate = true
+                })
 
             this.doomGuy.debugFolder
                 .addInput(
                     this.doomGuy.model.rotation,
                     'y',
                     {
-                        min: - Math.PI, max: Math.PI, step: 0.001
+                        label: 'rotationY', min: - Math.PI, max: Math.PI, step: 0.001
                     }
                 )
+                .on('change', () =>
+                {
+                    this.renderer.instance.shadowMap.needsUpdate = true
+                })
+
+            this.doomGuy.debugFolder
+                .addInput(
+                    this.doomGuy,
+                    'scale',
+                    {
+                        min: 0.01, max: 0.04, step: 0.0001
+                    }
+                )
+                .on('change', () =>
+                {
+                    this.doomGuy.model.scale.set(this.doomGuy.scale, this.doomGuy.scale, this.doomGuy.scale)
+                    this.renderer.instance.shadowMap.needsUpdate = true
+                })
         }
     }
 }

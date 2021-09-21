@@ -20,6 +20,7 @@ export default class FlowField
         this.width = 4096
         this.height = Math.ceil(this.count / this.width)
         this.texture = null
+        this.seed = Math.random() * 1000
 
         if(this.debug)
         {
@@ -116,7 +117,8 @@ export default class FlowField
 
                 uPerlinFrequency: { value: 4 },
                 uPerlinMultiplier: { value: 0.004 },
-                uTimeFrequency: { value: 0.0004 }
+                uTimeFrequency: { value: 0.0004 },
+                uSeed: { value: this.seed }
             },
             vertexShader: vertexShader,
             fragmentShader: fragmentShader
